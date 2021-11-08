@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap');
+.justify-center {
+    position: fixed;
+    margin: auto;
+    height: 50vh;
+    width: 20vw;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.form-field {
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 50px;
+    display: inline-block;
+    background: rgba(255, 255, 255, .25);
+    border: 1px solid transparent;
+    color: rgba(240, 240, 240, 1);
+    width: 100%;
+    margin-bottom: 20px;
+    outline: none;
+}
+
+.form-field:hover {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.form-field::placeholder {
+    font-family: 'Lato', sans-serif;
+    color: rgba(240, 240, 240, 1);
+    opacity: 1;
+}
+
+h3 {
+    font-weight: 100;
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.7vw;
+}
+
+#loginsubmit:active {
+    border-color: white;
+}
+
+#bg-img {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background-image: url(../resources/aurora.jpg);
+    background-size: auto, 100%;
+    opacity: 0.75;
+}
+
+body {
+    background-color: black;
+    font-family: 'Lato', 'sans-serif';
+}
+
+#register-link {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+    color: rgba(240, 240, 240, 1);
+}
