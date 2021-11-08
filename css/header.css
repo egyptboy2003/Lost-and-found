@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
 body,
 html {
     height: 100%;
@@ -64,7 +65,7 @@ body::-webkit-scrollbar {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 #loginout {
