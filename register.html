@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Login</title>
+    <title>Register</title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/login.css">
     <script src='js/hashes.js'></script>
@@ -24,11 +24,19 @@
     <div id="site-content">
         <div class="justify-center">
             <form id="login-form" method="POST" onsubmit="return getInfo();">
-                <h3>Have an account?</h3>
+                <h3>New Account?</h3>
                 <input class="form-field" name="email" type="email" placeholder="Email">
+                <!--
+                <input class="form-field half-form-field" name="password" type="password" placeholder="Password">
+                <input class="form-field half-form-field float-right" name="confirmpassword" type="password" placeholder="Confirm Password">
+                -->
                 <input class="form-field" name="password" type="password" placeholder="Password">
-                <input class="form-field form-submit" type="submit" id="loginsubmit" value="Sign In">
-                <a id="register-link" href="register.html">Don't have an account? Register now!</a>
+                <input class="form-field" name="confirmpassword" type="password" placeholder="Confirm Password">
+
+                <input class="form-field half-form-field" name="fname" type="text" placeholder="First Name">
+                <input class="form-field half-form-field float-right" name="lname" type="text" placeholder="Last Name">
+                <input class="form-field form-submit" type="submit" id="loginsubmit" value="Register">
+                <a id="register-link" href="login.html">Already have an account? Log in here!</a>
             </form>
             <div id='output-div'></div>
         </div>

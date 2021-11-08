@@ -7,9 +7,13 @@ function getInfo() {
     email = loginForm.email.value;
     password = SHA256.hex(loginForm.password.value);
 
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "php/user_create.php?email=" + email + "&password=" + password);
-    xhttp.send();
+    // const xhttp = new XMLHttpRequest();
+    // xhttp.open("POST", "php/user_create.php?email=" + email + "&password=" + password);
+    // xhttp.send();
+
+    sessionStorage.setItem('logintoken', 'beans');
+    window.location.href = "index.html";
+
 }
 
 
