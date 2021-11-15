@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../auth.php';
 ?>
 
 <!DOCTYPE html>
@@ -8,6 +9,7 @@ session_start();
 <head>
     <title>Lost items</title>
     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/table.css">
 </head>
 
 <body>
@@ -26,6 +28,29 @@ session_start();
                 ?>
             </li>
         </ul>
+    </div>
+    <div id="site-content">
+        <div class="table-container">
+            <table>
+                <tr class='table-header'>
+                    <th>Name</th>
+                    <th>Date Lost</th>
+                    <th>Category</th>
+                    <th>Value</th>
+                </tr>
+                    <?php
+                    $result = mysqli_query($conn, "SELECT * FROM lost_items");
+                    while($row = mysqli_fetch_assoc($result)){
+                        echo "<tr>
+                        <th>", $row['name'], "</th>
+                        <th>", $row['date_lost'], "</th>
+                        <th>", $row['category'], "</th>
+                        <th>", $row['value'], "</th>
+                        </tr>";
+                    }
+                    ?>
+            </table>
+        </div>
     </div>
 </body>
 
