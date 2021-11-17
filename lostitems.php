@@ -9,7 +9,8 @@ include '../auth.php';
 <head>
     <title>Lost items</title>
     <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/items.css">
+    <script src='js/form_toggle.js'></script>
 </head>
 
 <body>
@@ -29,29 +30,81 @@ include '../auth.php';
             </li>
         </ul>
     </div>
+    <div id="items-form-container" hidden>
+            <form id="items-form" method="POST" action="">
+                <h3>Lost an item?</h3>
+                Item Name<br>
+                <input class="form-field" name="itemname" type="text" required><br>
+                Date Lost<br>
+                <input class="form-field" name="datelost" type="date" required><br>
+                Category<br>
+                <select class="form-field" name="category">
+                    <option value="" selected disabled></option>
+                    <option value="Jewelery">Jewelery</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Other">Other</option>
+                </select><br>
+                Value<br>
+                <input class="form-field" name="value" type="number" required><br>
+                <input class="form-field form-submit" type="submit" name="itemsubmit" value="Submit">
+            </form>
+            <?php
+                if (isset($_POST["itemsubmit"])) {
+                    $itemname = $_POST["itemname"];
+                    $datelost = $_POST["datelost"];
+                    $category = $_POST["category"];
+                    $value = $_POST["value"];
+                    mysqli_query($conn, "INSERT INTO `lost_items` (`name`, `date_lost`, `category`, `value`) VALUES ('$itemname', '$datelost', '$category', '$value')");
+                }
+                ?>
+        </div>
     <div id="site-content">
+    <?php
+            if (isset($_SESSION['user-id'])) {
+                echo("<a onclick=\"openContainer();\"><div class='button'><p class='button-inner-text'>ADD ITEM</p></div></a>");
+            }
+        ?>
+        <form id='search-form' method='POST'>
+            <input class='search-bar' name='search' type='text' placeholder='SEARCH'>
+            <input type='submit' name='search-submit' hidden>
+        </form>
+        <?php
+        if (isset($_POST['search-submit'])) {
+            $GLOBALS['search-term'] = $_POST['search'];
+        } else {
+            $GLOBALS['search-term'] = '';
+        } ?>
         <div class="table-container">
             <table>
                 <tr class='table-header'>
-                    <th>Name</th>
-                    <th>Date Lost</th>
-                    <th>Category</th>
-                    <th>Value</th>
+                    <th>NAME</th>
+                    <th>DATE LOST</th>
+                    <th>CATEGORY</th>
+                    <th>VALUE</th>
                 </tr>
                     <?php
-                    $result = mysqli_query($conn, "SELECT * FROM lost_items");
-                    while($row = mysqli_fetch_assoc($result)){
-                        echo "<tr>
-                        <th>", $row['name'], "</th>
-                        <th>", $row['date_lost'], "</th>
-                        <th>", $row['category'], "</th>
-                        <th>", $row['value'], "</th>
-                        </tr>";
+                    $search_term = $GLOBALS['search-term'];
+                    if ($search_term != '') {
+                        $result = mysqli_query($conn, "SELECT * FROM lost_items WHERE (name LIKE '%$search_term%')");
+                    } else {
+                        $result = mysqli_query($conn, "SELECT * FROM lost_items");
+                    }
+                    if ($result) {
+                        while($row = mysqli_fetch_assoc($result)){
+                            echo "<tr>
+                            <th>", $row['name'], "</th>
+                            <th>", $row['date_lost'], "</th>
+                            <th>", $row['category'], "</th>
+                            <th>", $row['value'], "</th>
+                            </tr>";
+                        }
                     }
                     ?>
             </table>
         </div>
     </div>
 </body>
+
 
 </html>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../auth.php';
 ?>
 
 <html>
@@ -30,7 +31,7 @@ session_start();
     </div>
     <div id="site-content">
         <div class="justify-center">
-            <form id="login-form" method="POST" onsubmit="return getInfo();">
+            <form id="login-form" method="POST" action="">
                 <h3>New Account?</h3>
                 <input class="form-field" name="email" type="email" placeholder="Email">
                 <input class="form-field" name="password" type="password" placeholder="Password">
@@ -56,6 +57,9 @@ session_start();
                     echo "Passwords do not match.";
                 } else if(mysqli_num_rows($query) == 0) {
                     mysqli_query($conn, "INSERT INTO `users` (`email`, `password`, `firstname`, `lastname`) VALUES ('$email', '$password', '$fname', '$lname')");
+                    $result = mysqli_query($conn, "SELECT * FROM users WHERE (email = '$email')");
+                    $_SESSION['user-id'] = mysqli_fetch_assoc($result)['ID'];
+                    header('Location: index.php');
                 }
             }
             $conn = null;
