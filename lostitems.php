@@ -51,11 +51,12 @@ include '../auth.php';
             </form>
             <?php
                 if (isset($_POST["itemsubmit"])) {
-                    $itemname = $_POST["itemname"];
-                    $datelost = $_POST["datelost"];
-                    $category = $_POST["category"];
-                    $value = $_POST["value"];
-                    mysqli_query($conn, "INSERT INTO `lost_items` (`name`, `date_lost`, `category`, `value`) VALUES ('$itemname', '$datelost', '$category', '$value')");
+                    $poster_id = htmlentities($_SESSION['user-id'], ENT_QUOTES);
+                    $itemname = htmlentities($_POST["itemname"], ENT_QUOTES);
+                    $datelost = htmlentities($_POST["datelost"], ENT_QUOTES);
+                    $category = htmlentities($_POST["category"], ENT_QUOTES);
+                    $value = htmlentities($_POST["value"], ENT_QUOTES);
+                    mysqli_query($conn, "INSERT INTO `lost_items` (`poster_ID`, `name`, `date_lost`, `category`, `value`) VALUES ('$poster_id', '$itemname', '$datelost', '$category', '$value')");
                 }
                 ?>
         </div>
@@ -83,14 +84,14 @@ include '../auth.php';
                     <th>CATEGORY</th>
                     <th>VALUE</th>
                 </tr>
-                    <?php
-                    $search_term = $GLOBALS['search-term'];
+                <?php
+                    $search_term = htmlentities($GLOBALS['search-term'], ENT_QUOTES);
                     if ($search_term != '') {
                         $result = mysqli_query($conn, "SELECT * FROM lost_items WHERE (name LIKE '%$search_term%')");
                     } else {
                         $result = mysqli_query($conn, "SELECT * FROM lost_items");
                     }
-                    if ($result) {
+                    if (mysqli_num_rows($result) != 0) {
                         while($row = mysqli_fetch_assoc($result)){
                             echo "<tr>
                             <th>", $row['name'], "</th>
@@ -98,9 +99,12 @@ include '../auth.php';
                             <th>", $row['category'], "</th>
                             <th>", $row['value'], "</th>
                             </tr>";
-                        }
+                        } echo("</table>");
+                    } else {
+                        echo("</table>");
+                        echo("<p class='items-error-msg'>Search does not match any items.</p>");
                     }
-                    ?>
+                ?>
             </table>
         </div>
     </div>
