@@ -5,6 +5,7 @@
 }
 
 .site-content {
+    display: flex;
     margin-top: 5%;
     overflow-y: scroll;
     height: 90%;
